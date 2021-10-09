@@ -56,7 +56,7 @@ USER www-data
 
 # Copy existing application directory contents
 COPY ./ /var/www/html/
-COPY vhost.conf /etc/apache2/sites-available/000-default.conf
+COPY ./vhost.conf /etc/apache2/sites-available/000-default.conf
 
 # Copy existing application directory permissions
 COPY --chown=www-data:www-data . /var/www/html/
