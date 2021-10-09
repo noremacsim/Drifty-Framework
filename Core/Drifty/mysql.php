@@ -18,7 +18,7 @@ class mysql {
         $this->host         = getenv('DB_HOST');
         $this->database     = getenv('DB_DATABASE');
         $this->port         = getenv('DB_PORT');
-        $this->connect();
+        #$this->connect();
     }
 
     public function connect()
