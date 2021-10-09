@@ -26,6 +26,7 @@ require_once 'Core/Drifty/controller.php';
 require_once 'Core/Drifty/model.php';
 require_once 'Core/Drifty/mysql.php';
 require_once 'Core/Drifty/router.php';
+require_once 'Core/Drifty/mailer.php';
 require_once 'Core/Drifty/driftyApplication.php';
 
 //TODO: Check if in debug,dev mode first
