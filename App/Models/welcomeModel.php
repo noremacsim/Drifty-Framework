@@ -6,6 +6,6 @@ class welcomeModel extends model {
 
     public function welcome()
     {
-        echo 'Welcome Model';
+        //Example Model
     }
 }
