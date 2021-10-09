@@ -41,6 +41,17 @@ foreach (glob(Drifty\controller\controller::controller_dir . "/*.php") as $filen
     require_once $filename;
 }
 
+/*
+ * Register Routes
+ */
+$route = new Drifty\route\router;
+foreach (glob("Routes/*.php") as $filename)
+{
+    require_once $filename;
+}
+$route->setRoutes();
+
+
 $drifty = new driftyApplication();
 $drifty->start();
 
