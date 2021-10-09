@@ -1,0 +1,61 @@
+version: '3'
+
+services:
+
+  # PHP/Apache Service
+  app:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    container_name: ${SITE_NAME}
+    restart: unless-stopped
+    tty: true
+    user: root
+    privileged: true
+    environment:
+      SERVICE_NAME: app
+      SERVICE_TAGS: dev
+    ports:
+      - "2001:80"
+    volumes:
+      - ./:/var/www/html/
+      - .user.ini:/usr/local/etc/php/conf.d/local.ini
+    links:
+      - db
+    networks:
+      - default
+
+  # MySQL Service
+  db:
+    image: mysql:8.0.12
+    command: --default-authentication-plugin=mysql_native_password
+    container_name: ${DB_HOST}
+    restart: unless-stopped
+    ports:
+      - "${DB_PORT}:3306"
+    volumes:
+      - ./dev/mysql:/docker-entrypoint-initdb.d
+      - ./mysql:/var/lib/mysql
+    environment:
+      MYSQL_ROOT_PASSWORD: ${DB_PASSWORD}
+      MYSQL_DATABASE: ${DB_DATABASE}
+      MYSQL_USER: ${DB_USERNAME}
+      MYSQL_PASSWORD: ${DB_PASSWORD}
+      MYSQL_ROOT_HOST: '%'
+
+  # PHPMyAdmin Service
+  # phpmyadmin:
+  #   image: phpmyadmin/phpmyadmin
+  #   container_name: phpmyadmin
+  #   restart: unless-stopped
+  #   tty: true
+  #   links:
+  #     - db:db
+  #   ports:
+  #     - 8082:80
+  #   environment:
+  #     MYSQL_USER: ${DB_USERNAME}
+  #     MYSQL_PASSWORD: ${DB_PASSWORD}
+  #     MYSQL_ROOT_PASSWORD: ${DB_PASSWORD}
+  #     SERVICE_NAME: phpmyadmin
+  #     SERVICE_TAGS: dev
