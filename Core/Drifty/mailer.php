@@ -1,4 +1,14 @@
 <?php
+/*
+ * Drifty FrameWork by noremacsim(Cameron Sim)
+ *
+ * This File has been created by noremacsim(Cameron Sim) under the Drifty FrameWork
+ * And will follow all the Drifty FrameWork Licence Terms which can be found under Licence
+ *
+ * @author     Cameron Sim <mrcameronsim@gmail.com>
+ * @author     noremacsim <noremacsim@github>
+ */
+
 namespace Drifty\mailer;
 
 use PHPMailer\PHPMailer\PHPMailer;
@@ -24,6 +34,7 @@ class mailer {
             $this->password = $GLOBALS['email']['password'];
         }
     }
+
 
     public function connect(): void
     {

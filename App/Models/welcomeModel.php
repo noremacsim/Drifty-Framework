@@ -3,9 +3,9 @@
 use Drifty\model\model;
 
 class welcomeModel extends model {
+    // Table Name
+    const name = '';
 
-    public function welcome()
-    {
-        //Example Model
-    }
+    //Nice Name
+    public $name   = 'Welcome';
 }
