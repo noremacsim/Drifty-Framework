@@ -1,7 +1,9 @@
 {
     "require": {
-        "twig/twig": "^3.3",
+        "twig/twig": "^2",
         "filp/whoops": "^2.14",
-        "klein/klein": "^2.1"
+        "klein/klein": "^2.1",
+        "phpmailer/phpmailer": "^6.5",
+        "phpdocumentor/phpdocumentor": "3.*"
     }
 }
