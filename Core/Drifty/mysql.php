@@ -1,4 +1,14 @@
 <?PHP
+/*
+ * Drifty FrameWork by noremacsim(Cameron Sim)
+ *
+ * This File has been created by noremacsim(Cameron Sim) under the Drifty FrameWork
+ * And will follow all the Drifty FrameWork Licence Terms which can be found under Licence
+ *
+ * @author     Cameron Sim <mrcameronsim@gmail.com>
+ * @author     noremacsim <noremacsim@github>
+ */
+
 namespace Drifty\controller\mysql;
 
 class mysql {
@@ -18,10 +28,31 @@ class mysql {
         $this->host         = getenv('DB_HOST');
         $this->database     = getenv('DB_DATABASE');
         $this->port         = getenv('DB_PORT');
-        #$this->connect();
+        $this->connect();
     }
 
-    public function connect()
+    /**
+     * @param $table
+     * @return array|false
+     */
+    public function fetchFields($table)
+    {
+        $result = $this->query(sprintf("SHOW COLUMNS FROM %s", $table));
+        if (!$result) {
+            return false;
+        }
+
+        while ($row = mysqli_fetch_assoc($result)) {
+            $data[] = $row;
+        }
+
+        return $data;
+    }
+
+    /**
+     * @return bool
+     */
+    public function connect(): bool
     {
         $this->connection = mysqli_connect($this->host, $this->username, $this->password, $this->database, $this->port);
         if ($this->connection) {
@@ -32,7 +63,11 @@ class mysql {
         return false;
     }
 
-    private function switchdb($database)
+    /**
+     * @param $database
+     * @return bool
+     */
+    private function switchdb($database): bool
     {
 
         if ($database) {
@@ -43,7 +78,10 @@ class mysql {
         return false;
     }
 
-    private function disconnect()
+    /**
+     * @return bool
+     */
+    private function disconnect(): bool
     {
 
         if ($this->connection) {
@@ -53,6 +91,10 @@ class mysql {
         return true;
     }
 
+    /**
+     * @param string $string
+     * @return mixed
+     */
     public function query($string = "")
     {
 
@@ -67,6 +109,10 @@ class mysql {
         return $result;
     }
 
+    /**
+     * @param string $string
+     * @return array|mixed|string
+     */
     public function escapestring($string = "")
     {
         if (is_array($string) == false) {
@@ -75,6 +121,10 @@ class mysql {
         return $string;
     }
 
+    /**
+     * @param string $string
+     * @return array|mixed|string
+     */
     public function quote($string = "")
     {
         if (is_array($string) == false) {
@@ -83,11 +133,19 @@ class mysql {
         return $string;
     }
 
+    /**
+     * @return int|string
+     */
     public function getlastid()
     {
         return mysqli_insert_id($this->connection);
     }
 
+    /**
+     * @param string $table
+     * @param array $values
+     * @return false|int|string
+     */
     public function insert($table = "", $values = array())
     {
         if ($table && is_array($values) == true && count($values) > 0) {
@@ -107,6 +165,12 @@ class mysql {
         return ($insertid > 0 ? $insertid : false);
     }
 
+    /**
+     * @param string $table
+     * @param array $values
+     * @param array $clauses
+     * @return false|mixed
+     */
     public function update($table = "", $values = array(), $clauses = array())
     {
         if ($table && is_array($values) == true && count($values) > 0) {
@@ -135,9 +199,14 @@ class mysql {
         return ($result ?? false);
     }
 
+    /**
+     * @param string $table
+     * @param array $values
+     * @param array $clauses
+     * @return false|int|string
+     */
     public function replace($table = "", $values = array(), $clauses = array())
     {
-
         $result = false;
         $check = false;
 
@@ -188,6 +257,11 @@ class mysql {
         return ($insertid > 0 ? $insertid : false);
     }
 
+    /**
+     * @param string $table
+     * @param array $clauses
+     * @return false|mixed
+     */
     public function delete($table = "", $clauses = array())
     {
 
@@ -206,6 +280,14 @@ class mysql {
         return ($result ? $result : false);
     }
 
+    /**
+     * @param string $fields
+     * @param string $table
+     * @param array $clauses
+     * @param string $orderby
+     * @param string $groupby
+     * @return array
+     */
     public function select($fields = "", $table = "", $clauses = array(), $orderby = "", $groupby = "")
     {
 
@@ -223,7 +305,7 @@ class mysql {
 
             if (count($clauses) > 0) {
                 foreach (array_keys($clauses) as $field) {
-                    array_push($where, sprintf("%s = %s", $field, $this->quote($clauses[$field])));
+                    $where[] = sprintf("%s = %s", $field, $this->quote($clauses[$field]));
                 }
 
                 $wheresql = "WHERE " . implode(" AND ", $where);
@@ -243,7 +325,7 @@ class mysql {
                 $wheresql . $group . $order);
             $result = $this->query($this->lastsql);
             while ($row = mysqli_fetch_assoc($result)) {
-                array_push($rows, $row);
+                $rows[] = $row;
             }
 
         }
@@ -251,6 +333,14 @@ class mysql {
         return $rows;
     }
 
+    /**
+     * @param string $string
+     * @param string $field
+     * @param string $table
+     * @param array $clauses
+     * @param int $flexability
+     * @return mixed|void
+     */
     function fuzzyselect($string = "", $field = "", $table = "", $clauses = array(), $flexability = 2)
     {
 
@@ -262,11 +352,11 @@ class mysql {
             $where = array();
             if (count($clauses) > 0) {
                 foreach (array_keys($clauses) as $f) {
-                    array_push($where, sprintf("%s = %s", $f, $this->quote($clauses[$f])));
+                    $where[] = sprintf("%s = %s", $f, $this->quote($clauses[$f]));
                 }
             }
 
-            array_push($where, sprintf("%s LIKE %s", $field, $this->quote(substr($string, 0, 1) . "%")));
+            $where[] = sprintf("%s LIKE %s", $field, $this->quote(substr($string, 0, 1) . "%"));
 
             $this->lastsql = sprintf("SELECT id, %s AS string FROM %s WHERE %s", $field, $table,
                 implode(" AND ", $where));
@@ -278,8 +368,8 @@ class mysql {
 
                     $row['difference'] = $difference;
 
-                    array_push($rows, $row);
-                    array_push($differences, $difference);
+                    $rows[] = $row;
+                    $differences = $difference;
                 }
             }
 
@@ -291,11 +381,19 @@ class mysql {
 
     }
 
+    /**
+     * @param $resource
+     * @return array|false|string[]|null
+     */
     function fetch($resource)
     {
         return mysqli_fetch_assoc($resource);
     }
 
+    /**
+     * @param $resource
+     * @return int|string
+     */
     function foundrows($resource)
     {
         return mysqli_num_rows($resource);

@@ -7,6 +7,5 @@ class welcomeController extends controller {
     public function welcome()
     {
         echo $this->view->render('welcome.twig');
-        echo $this->model->welcome();
     }
 }
