@@ -1,4 +1,13 @@
 <?php
+/*
+ * Drifty FrameWork by noremacsim(Cameron Sim)
+ *
+ * This File has been created by noremacsim(Cameron Sim) under the Drifty FrameWork
+ * And will follow all the Drifty FrameWork Licence Terms which can be found under Licence
+ *
+ * @author     Cameron Sim <mrcameronsim@gmail.com>
+ * @author     noremacsim <noremacsim@github>
+ */
 
 $GLOBALS['starttTime']      = microtime(true);
 $GLOBALS['drifty_version']   = 'v0.1';
@@ -26,6 +35,7 @@ require_once 'Core/Drifty/controller.php';
 require_once 'Core/Drifty/model.php';
 require_once 'Core/Drifty/mysql.php';
 require_once 'Core/Drifty/router.php';
+require_once 'Core/Drifty/mailer.php';
 require_once 'Core/Drifty/driftyApplication.php';
 
 //TODO: Check if in debug,dev mode first
