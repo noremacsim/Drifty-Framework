@@ -2,7 +2,9 @@
 namespace Drifty\controller;
 
 class welcomeController extends controller {
-    const modal = 'welcome';
+    protected $config = [
+      'modal' => 'welcome',
+    ];
 
     public function welcome()
     {
