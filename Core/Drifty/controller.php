@@ -14,7 +14,6 @@ namespace Drifty\controller;
 class controller {
     public $view;
     public $model;
-
     const controller_dir = 'App/Controllers';
 
     public function __construct() {
@@ -22,7 +21,7 @@ class controller {
         $twig               = new \Twig\Environment($loader);
         $this->view         = $twig;
 
-        $name               = static::modal;
+        $name               = $this->config['modal'];
         $path               = 'App/Models/' . $name . 'Model.php';
         if(file_exists($path)) {
             require $path;
