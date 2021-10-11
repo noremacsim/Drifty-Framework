@@ -42,20 +42,3 @@ services:
       MYSQL_USER: ${DB_USERNAME}
       MYSQL_PASSWORD: ${DB_PASSWORD}
       MYSQL_ROOT_HOST: '%'
-
-  # PHPMyAdmin Service
-  # phpmyadmin:
-  #   image: phpmyadmin/phpmyadmin
-  #   container_name: phpmyadmin
-  #   restart: unless-stopped
-  #   tty: true
-  #   links:
-  #     - db:db
-  #   ports:
-  #     - 8082:80
-  #   environment:
-  #     MYSQL_USER: ${DB_USERNAME}
-  #     MYSQL_PASSWORD: ${DB_PASSWORD}
-  #     MYSQL_ROOT_PASSWORD: ${DB_PASSWORD}
-  #     SERVICE_NAME: phpmyadmin
-  #     SERVICE_TAGS: dev
