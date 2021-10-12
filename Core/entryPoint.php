@@ -73,7 +73,6 @@ foreach (glob("Routes/*.php") as $filename)
 }
 $route->setRoutes();
 
-
 $drifty = new driftyApplication();
 $drifty->start();
 

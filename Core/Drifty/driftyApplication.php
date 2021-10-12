@@ -15,7 +15,7 @@ class driftyApplication {
 
     public $drifty_footer       = false;
     public $default_action      = 'welcome';
-    public $default_controller  = 'welcomeController';
+    public $default_controller  = 'welcome';
 
     public function start()
     {

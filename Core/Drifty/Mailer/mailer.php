@@ -9,7 +9,7 @@
  * @author     noremacsim <noremacsim@github>
  */
 
-namespace Drifty\mailer;
+namespace Drifty\Mailer;
 
 use PHPMailer\PHPMailer\PHPMailer;
 use PHPMailer\PHPMailer\SMTP;

@@ -33,8 +33,7 @@ class model {
     {
         if ($this->table_name == '')
         {
-            $result = str_replace('Model', '', get_class($this));
-            $result = str_replace('Drifty\s\\', '', $result);
+            $result = str_replace('Drifty\Models\\', '', get_class($this));
         }
         else
         {

@@ -2,7 +2,7 @@
 
 namespace Drifty\Models;
 
-class welcomeModel extends model {
+class welcome extends model {
 
     /*
      * Protected Database Fields.
