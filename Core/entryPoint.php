@@ -31,11 +31,11 @@ if (file_exists($autoloader)) {
     die('Composer autoloader not found. please run "composer install"');
 }
 
-require_once 'Core/Drifty/controller.php';
-require_once 'Core/Drifty/model.php';
-require_once 'Core/Drifty/mysql.php';
-require_once 'Core/Drifty/router.php';
-require_once 'Core/Drifty/mailer.php';
+///require_once 'Core/Drifty/controller.php';
+//require_once 'Core/Drifty/model.php';
+//require_once 'Core/Drifty/mysql.php';
+//require_once 'Core/Drifty/router.php';
+//require_once 'Core/Drifty/mailer.php';
 require_once 'Core/Drifty/dotEnv.php';
 require_once 'Core/Drifty/driftyApplication.php';
 
@@ -50,7 +50,15 @@ $whoops->register();
 /*
  *  Require Controllers
  */
-foreach (glob(Drifty\controller\controller::controller_dir . "/*.php") as $filename)
+foreach (glob(Drifty\Controllers\controller::controller_dir . "/*.php") as $filename)
+{
+    require_once $filename;
+}
+
+/*
+ *  Require Models
+ */
+foreach (glob(Drifty\Models\model::model_dir . "/*.php") as $filename)
 {
     require_once $filename;
 }
@@ -58,7 +66,7 @@ foreach (glob(Drifty\controller\controller::controller_dir . "/*.php") as $filen
 /*
  * Register Routes
  */
-$route = new Drifty\route\router;
+$route = new Drifty\Routes\router;
 foreach (glob("Routes/*.php") as $filename)
 {
     require_once $filename;

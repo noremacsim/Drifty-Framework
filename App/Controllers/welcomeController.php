@@ -1,5 +1,5 @@
 <?php
-namespace Drifty\controller;
+namespace Drifty\Controllers;
 
 class welcomeController extends controller {
     protected $config = [
@@ -9,5 +9,7 @@ class welcomeController extends controller {
     public function welcome()
     {
         echo $this->view->render('welcome.twig');
+        //print_r($this->model->properties);
     }
+
 }

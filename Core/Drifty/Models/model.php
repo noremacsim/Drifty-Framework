@@ -9,8 +9,10 @@
  * @author     noremacsim <noremacsim@github>
  */
 
-namespace Drifty\model;
-use Drifty\controller\mysql\mysql;
+namespace Drifty\Models;
+
+use Drifty\Models\mysql\mysql;
+
 class model {
     public $db;
     const model_dir             = 'App/Models';
@@ -32,6 +34,7 @@ class model {
         if ($this->table_name == '')
         {
             $result = str_replace('Model', '', get_class($this));
+            $result = str_replace('Drifty\s\\', '', $result);
         }
         else
         {
