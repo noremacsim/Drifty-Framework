@@ -9,9 +9,7 @@
  * @author     noremacsim <noremacsim@github>
  */
 
-namespace Drifty\route;
-
-use Drifty\controller;
+namespace Drifty\Routes;
 
 class router extends \Klein\Klein {
 

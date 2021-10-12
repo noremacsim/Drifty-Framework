@@ -9,7 +9,7 @@
  * @author     noremacsim <noremacsim@github>
  */
 
-use Drifty\route;
+use Drifty\Routes;
 
 class driftyApplication {
 
@@ -19,7 +19,7 @@ class driftyApplication {
 
     public function start()
     {
-        $router = new route\router();
+        $router = new Routes\router();
         $router->setRoutes();
     }
 }

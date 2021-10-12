@@ -9,7 +9,7 @@
  * @author     noremacsim <noremacsim@github>
  */
 
-namespace Drifty\controller\mysql;
+namespace Drifty\Models\mysql;
 
 class mysql {
     private $username;

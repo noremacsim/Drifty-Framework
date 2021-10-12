@@ -9,7 +9,8 @@
  * @author     noremacsim <noremacsim@github>
  */
 
-namespace Drifty\controller;
+namespace Drifty\Controllers;
+use Drifty\Models;
 
 class controller {
     public $view;
@@ -20,12 +21,18 @@ class controller {
         $loader             = new \Twig\Loader\FilesystemLoader('App/Views/');
         $twig               = new \Twig\Environment($loader);
         $this->view         = $twig;
+        $this->loadModel();
+    }
 
-        $name               = $this->config['modal'];
-        $path               = 'App/Models/' . $name . 'Model.php';
-        if(file_exists($path)) {
-            require $path;
-            $modelName      = $name . 'Model';
+    public function loadModel($modelName = '')
+    {
+        if ($modelName === '')
+        {
+            $model_class = str_replace('Controller', 'Model', get_class($this));
+            if (class_exists($model_class)) {
+                $this->model    = new $model_class();
+            }
+        } else {
             $this->model    = new $modelName();
         }
     }

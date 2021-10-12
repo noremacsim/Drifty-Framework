@@ -1,6 +1,6 @@
 <?php
 
-use Drifty\model\model;
+namespace Drifty\Models;
 
 class welcomeModel extends model {
 
