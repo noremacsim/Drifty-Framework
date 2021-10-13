@@ -12,15 +12,12 @@
 namespace Drifty\Controllers;
 use Drifty\Models;
 
-class controller {
+class controller extends view {
     public $view;
     public $model;
     const controller_dir = 'App/Controllers';
 
     public function __construct() {
-        $loader             = new \Twig\Loader\FilesystemLoader('App/Views/');
-        $twig               = new \Twig\Environment($loader);
-        $this->view         = $twig;
         $this->loadModel();
     }
 

@@ -9,9 +9,7 @@
  * @author     noremacsim <noremacsim@github>
  */
 
-$GLOBALS['starttTime']      = microtime(true);
-$GLOBALS['drifty_version']   = 'v0.1';
-$GLOBALS['drifty_flavor']    = 'Lime Pie';
+/** @var $config */
 
 set_include_path(
     __DIR__ .'/..'.PATH_SEPARATOR.
@@ -23,6 +21,20 @@ if (!defined('PHP_VERSION_ID')) {
     define('PHP_VERSION_ID', ($version_array[0] * 10000 + $version_array[1] * 100 + $version_array[2]));
 }
 
+/*
+ *  Require Config
+ */
+if (file_exists('config.php')) {
+    require_once 'config.php';
+} else {
+    require_once 'config.example.php';
+}
+$GLOBALS = $config;
+$GLOBALS['starttTime']      = microtime(true);
+$GLOBALS['drifty_version']   = 'v0.1';
+$GLOBALS['drifty_flavor']    = 'Lime Pie';
+$page = $GLOBALS['page'];
+
 $BASE_DIR = realpath(dirname(__DIR__));
 $autoloader = $BASE_DIR.'/vendor/autoload.php';
 if (file_exists($autoloader)) {
@@ -31,11 +43,6 @@ if (file_exists($autoloader)) {
     die('Composer autoloader not found. please run "composer install"');
 }
 
-///require_once 'Core/Drifty/controller.php';
-//require_once 'Core/Drifty/model.php';
-//require_once 'Core/Drifty/mysql.php';
-//require_once 'Core/Drifty/router.php';
-//require_once 'Core/Drifty/mailer.php';
 require_once 'Core/Drifty/dotEnv.php';
 require_once 'Core/Drifty/driftyApplication.php';
 
@@ -45,7 +52,6 @@ $whoops->pushHandler(new \Whoops\Handler\PrettyPageHandler);
 $whoops->register();
 
 (new DotEnv( '.env'))->load();
-
 
 /*
  *  Require Controllers

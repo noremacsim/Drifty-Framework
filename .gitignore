@@ -4,3 +4,4 @@
 /vendor
 /.idea
 /.phpdoc/
+/config.php
