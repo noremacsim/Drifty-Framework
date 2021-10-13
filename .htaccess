@@ -1,3 +1,23 @@
+Options -Indexes
+IndexIgnore *
 RewriteEngine On
 RewriteCond %{REQUEST_FILENAME} !-f
 RewriteRule . /index.php [L]
+
+# TODO: Figure why it cant be found, something todo with the routing.
+ErrorDocument 403 /forbidden
+
+# Deny Access to all files
+Order allow,deny
+Deny from all
+
+# Allow Access to Index
+<FilesMatch ^(index\.php)?$>
+  Allow from all
+</FilesMatch>
+
+# Allow Access to Style and Script Files
+<FilesMatch "\.(css|js|scss)$">
+Order Deny,Allow
+    Allow from all
+</FilesMatch>
