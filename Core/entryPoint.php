@@ -21,6 +21,12 @@ if (!defined('PHP_VERSION_ID')) {
     define('PHP_VERSION_ID', ($version_array[0] * 10000 + $version_array[1] * 100 + $version_array[2]));
 }
 
+$subject = new stdClass();// Model Objects
+$driftyApp = new stdClass();// Core System Variables;
+$driftyApp->starttTime     = microtime(true);
+$driftyApp->drifty_version   = 'v0.1';
+$driftyApp->drifty_flavor   = 'Lime Pie';
+
 /*
  *  Require Config
  */
@@ -29,11 +35,10 @@ if (file_exists('config.php')) {
 } else {
     require_once 'config.example.php';
 }
-$GLOBALS = $config;
-$GLOBALS['starttTime']      = microtime(true);
-$GLOBALS['drifty_version']   = 'v0.1';
-$GLOBALS['drifty_flavor']    = 'Lime Pie';
-$page = $GLOBALS['page'];
+
+foreach ($config as $configItemKey => $configItemArray) {
+    $driftyApp->{$configItemKey} = (object)$configItemArray;
+}
 
 $BASE_DIR = realpath(dirname(__DIR__));
 $autoloader = $BASE_DIR.'/vendor/autoload.php';
@@ -67,7 +72,17 @@ foreach (glob(Drifty\Controllers\controller::controller_dir . "/*.php") as $file
 foreach (glob(Drifty\Models\model::model_dir . "/*.php") as $filename)
 {
     require_once $filename;
+    $moduleFile = explode('.php', explode(Drifty\Models\model::model_dir . '/', $filename)[1]);
+    $thisclass  = 'Drifty\Models\\' . $moduleFile[0];
+    $subject->{$moduleFile[0]}  = new $thisclass;
+    unset($moduleFile);
+    unset($thisclass);
 }
+
+unset($config);
+unset($configItemKey);
+unset($configItemArray);
+unset($version_array);
 
 /*
  * Register Routes

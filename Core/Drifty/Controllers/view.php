@@ -15,11 +15,11 @@ class view {
 
     public function render($name, array $context = [])
     {
-        global $page;
+        global $driftyApp;
         $loader             = new \Twig\Loader\FilesystemLoader('App/Views/');
         $twig               = new \Twig\Environment($loader);
         $this->view         = $twig;
-        $twig->addGlobal('page', $page);
+        $twig->addGlobal('page', $driftyApp->page);
         return $twig->render($name, $context);
     }
 
