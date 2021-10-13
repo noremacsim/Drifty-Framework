@@ -51,12 +51,15 @@ if (file_exists($autoloader)) {
 require_once 'Core/Drifty/dotEnv.php';
 require_once 'Core/Drifty/driftyApplication.php';
 
-//TODO: Check if in debug,dev mode first
-$whoops = new \Whoops\Run;
-$whoops->pushHandler(new \Whoops\Handler\PrettyPageHandler);
-$whoops->register();
-
 (new DotEnv( '.env'))->load();
+
+
+if (getenv('DEBUG') === 'true') {
+    $whoops = new \Whoops\Run;
+    $whoops->pushHandler(new \Whoops\Handler\PrettyPageHandler);
+    $whoops->register();
+}
+
 
 /*
  *  Require Controllers
