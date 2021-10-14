@@ -14,15 +14,28 @@ namespace Drifty\Models;
 use Drifty\Models\mysql\mysql;
 
 class model {
+
     public $db;
     const model_dir             = 'App/Models';
-    protected $table_name       = '';
+
+    /**
+     * @var array|mixed|string|string[]
+     */
+    protected $tableName        = '';
+
+    /**
+     * @var array
+     */
     public $properties          = array();
+
+    /**
+     * @var array
+     */
     protected $parent_objects   = array();
 
     public function __construct()
     {
-        $this->table_name = $this->getTableName();
+        $this->tableName = $this->getTableName();
         $this->load();
     }
 
@@ -31,13 +44,18 @@ class model {
      */
     public function getTableName()
     {
-        if ($this->table_name == '')
+        if (!$this->table || $this->table === '')
         {
-            $result = str_replace('Drifty\Models\\', '', get_class($this));
-        }
-        else
-        {
-            $result = $this->table_name;
+            if ($this->tableName == '')
+            {
+                $result = str_replace('Drifty\Models\\', '', get_class($this));
+            }
+            else
+            {
+                $result = $this->tableNmae;
+            }
+        } else {
+            $result = $this->table;
         }
         return $result;
     }
@@ -95,14 +113,11 @@ class model {
     }
 
 
-    /**
-     * @param $name
-     */
     public function load() {
-        if ($this->table_name && $this->table_name !== "")
+        if ($this->tableName && $this->tableName !== "")
         {
             $this->db = new mysql();
-            $fields = $this->db->fetchFields($this->table_name);
+            $fields = $this->db->fetchFields($this->tableName);
             if ($fields) {
                 foreach ($fields as $field) {
                     $this->add_property(
@@ -132,9 +147,13 @@ class model {
         $this->data = $this->getData();
     }
 
+    /**
+     * @param $id
+     * @return mixed
+     */
     private function retrieveByPrimary($id)
     {
-        return $this->db->select('*', $this->table_name, array($this->primaryKey => $id));
+        return $this->db->select('*', $this->tableName, array($this->primaryKey => $id));
     }
 
     /**
@@ -144,14 +163,14 @@ class model {
      */
     private function getData($fields = false, array $clauses = array()): string
     {
-        return $this->db->select($fields ?? '*', $this->table_name, $clauses);
+        return $this->db->select($fields ?? '*', $this->tableName, $clauses);
     }
 
 
     public function save()
     {
         //TODO: Update to use the new proporties
-        $this->db->replace($this->table_name, $this->properties);
+        $this->db->replace($this->tableName, $this->properties);
     }
 
     /**

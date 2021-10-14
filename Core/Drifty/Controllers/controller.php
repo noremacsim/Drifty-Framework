@@ -25,9 +25,9 @@ class controller extends view {
     {
         if ($modelName === '')
         {
-            $model_class = str_replace('Controller', 'Model', get_class($this));
-            if (class_exists($model_class)) {
-                $this->model    = new $model_class();
+            $modelClass = str_replace('Controller', 'Model', get_class($this));
+            if (class_exists($modelClass)) {
+                $this->model    = new $modelClass();
             }
         } else {
             $this->model    = new $modelName();
