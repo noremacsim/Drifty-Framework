@@ -21,6 +21,11 @@ class controller extends view {
         $this->loadModel();
     }
 
+    /**
+     * Load Related Model to Controller
+     *
+     * @param string $modelName
+     */
     public function loadModel($modelName = '')
     {
         if ($modelName === '')

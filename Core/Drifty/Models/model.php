@@ -40,6 +40,14 @@ class model {
     }
 
     /**
+     * Return Table name of the current Object Model if set
+     * If the tableName is not set it will take the classname
+     * to set the tableName add
+     * <code>
+     *  public $table = '{DB_TABLE}';
+     * </code>
+     * To your model, Replacing {DB_TABLE} with your table name.
+     *
      * @return array|mixed|string|string[]
      */
     public function getTableName()
@@ -113,7 +121,7 @@ class model {
     }
 
 
-    public function load() {
+    private function load() {
         if ($this->tableName && $this->tableName !== "")
         {
             $this->db = new mysql();
@@ -148,6 +156,14 @@ class model {
     }
 
     /**
+     * Uses the findOrCreate Method to return DB Data based on the
+     * Primary Key. The Primary Key is auto taken from the DB.
+     * But this can be set yourself by adding
+     * <code>
+     *  public $primaryKey = '{PRIMARY_KEY}'
+     * </code>
+     * To your model, Replacing {PRIMARY_KEY} with table's Primary Key ID.
+     *
      * @param $id
      * @return mixed
      */
@@ -166,7 +182,14 @@ class model {
         return $this->db->select($fields ?? '*', $this->tableName, $clauses);
     }
 
-
+    /**
+     * save model object data to the database table.
+     * <code>
+     *  $modelExample::findOrCreate(1);
+     *  $modelExample->name = 'Drifty Example';
+     *  $modelExample->save();
+     * </code>
+     */
     public function save()
     {
         //TODO: Update to use the new proporties
@@ -174,6 +197,10 @@ class model {
     }
 
     /**
+     * Create Model Object Data Structure.
+     * This is auto loaded from the DB, Values will be populated
+     * when data is retrieved
+     *
      * @param $property_name
      * @param $data_type
      * @param string $data_length
@@ -223,6 +250,26 @@ class model {
         return $result;
     }
 
+    /**
+     * Find data from DB from PrimayID, Or Create a new Model Object
+     * by passing an array of ids multipe Model Objects can be returned
+     * of each record.
+     *
+     * Example find record from DB.
+     * <code>
+     * $exampleModels::findOrCreate(1);
+     * </code>
+     * Example find multiple records by ID and return
+     * <code>
+     * $exampleModels::findOrCreate(array(1,2,3,4));
+     * </code>
+     * Return new model object to create new DB Entry
+     * <code>
+     * $exampleModels::findOrCreate();
+     * </code>
+     * @param string $id
+     * @return array|static
+     */
     public static function findOrCreate($id = '')
     {
         if (empty($id))
