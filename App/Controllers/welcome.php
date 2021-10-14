@@ -5,6 +5,7 @@ class welcome extends controller {
     protected $config = [
       'modal' => 'welcome',
     ];
+    protected $primaryKey = 'id';
 
     public function welcome()
     {

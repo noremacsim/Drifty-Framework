@@ -96,7 +96,3 @@ foreach (glob("Routes/*.php") as $filename)
     require_once $filename;
 }
 $route->setRoutes();
-
-$drifty = new driftyApplication();
-$drifty->start();
-

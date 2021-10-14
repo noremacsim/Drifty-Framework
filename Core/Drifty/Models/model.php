@@ -132,6 +132,11 @@ class model {
         $this->data = $this->getData();
     }
 
+    private function retrieveByPrimary($id)
+    {
+        return $this->db->select('*', $this->table_name, array($this->primaryKey => $id));
+    }
+
     /**
      * @param false $fields
      * @param array $clauses
@@ -146,7 +151,7 @@ class model {
     public function save()
     {
         //TODO: Update to use the new proporties
-        $this->db->replace($this->table, $this->data);
+        $this->db->replace($this->table_name, $this->properties);
     }
 
     /**
@@ -169,11 +174,72 @@ class model {
     }
 
     /**
+     * @param $propertieValues
+     * @return bool|void
+     */
+    protected function fillPropertyValues($propertieValues)
+    {
+        if (!is_array($propertieValues))
+        {
+            return;
+        }
+
+        foreach($propertieValues as $field => $value)
+        {
+            if (isset($this->properties[$field]))
+            {
+                $this->properties[$field]['value'] = $value;
+            }
+        }
+
+        return true;
+    }
+
+    /**
      * @return int[]|string[]
      */
     public function get_property_names()
     {
         $result = array_keys($this->properties);
         return $result;
+    }
+
+    public static function findOrCreate($id = '')
+    {
+        if (empty($id))
+        {
+            return new static;
+        }
+
+        if (is_array($id))
+        {
+            $object = [];
+            foreach ($id as $value)
+            {
+                $instance = new static;
+                $data = $instance->retrieveByPrimary($value);
+                $instance->fillPropertyValues($data);
+                $object[] = $instance;
+            }
+            return $object;
+        } else {
+            $instance       = new static;
+            $data = $instance->retrieveByPrimary($id);
+            $instance->fillPropertyValues($data);
+            return  $instance;
+        }
+    }
+
+    /**
+     * Get the class "basename" of the given object / class.
+     *
+     * @param  string|object  $class
+     * @return string
+     */
+    private function class_basename($class)
+    {
+        $class = is_object($class) ? get_class($class) : $class;
+
+        return basename(str_replace('\\', '/', $class));
     }
 }
