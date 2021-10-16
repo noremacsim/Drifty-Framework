@@ -1,4 +1,6 @@
 # Drifty
+[![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
+
 Drifty is a PHP lightweight framework. Originaly built for personal usage, parts have now came to gether along with a couple of libary's to manage future developemnt cycle.
 
 ## Documentation
