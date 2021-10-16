@@ -1,3 +1,6 @@
-assets/** binary
-assets/* linguist-vendored
+/assets/** binary
+/assets/* binary
+/assets/* linguist-vendored
+/assets/** linguist-vendored
+
 
