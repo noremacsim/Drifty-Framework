@@ -1,5 +1,5 @@
 # Drifty
-Drifty is a PHP lightweight framework. Following the bare bone MVC Design will allow you and your application to be fully expandable no matter the development path. This project is created and supported on a personal basis. Drifty is used for my own application before I decided to create a barebone of the FrameWork.
+Drifty is a PHP lightweight framework. Originaly built for personal usage, parts have now came to gether along with a couple of libary's to manage future developemnt cycle.
 
 ## Documentation
 
@@ -8,6 +8,9 @@ Drifty is a PHP lightweight framework. Following the bare bone MVC Design will a
 - Models
 - Databse
 - Template/View
+- Api
+- Authentication
+- Object relational Mapping
 
 ## Composer Packages
 List of the included composer packages within the Drifty FrameWork
@@ -19,3 +22,5 @@ List of the included composer packages within the Drifty FrameWork
 
 # Installing
 Documentation Coming Soon...
+
+@author     noremacsim <noremacsim@github>
