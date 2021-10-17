@@ -5,11 +5,14 @@ Drifty is a PHP lightweight framework. Originaly built for personal usage, parts
 
 # Development Notice
 
+### Basic Welcome example in App/Controllers/welcome.php
+
 - This is in very early stages
 - Template Engine and Router will be replaced with my own custom ones. Dont build anything around them that can't be upgraded.
 
 ## Documentation
 
+Documentation Coming Soon...
 - Routing
 - Controllers
 - Models
