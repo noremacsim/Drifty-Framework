@@ -14,11 +14,31 @@ namespace Drifty\Controllers;
 class view
 {
 
+    /**
+     * @var array
+     */
     public $blocks = array();
+
+    /**
+     * @var array|false|string
+     */
     public $cachePath = 'cache/';
+
+    /**
+     * @var array|bool|string
+     */
     public $cacheEnabled = false;
+
+    /**
+     * @var array
+     */
     public $globals = array();
+
+    /**
+     * @var array|false|string
+     */
     public $tplDirectory = '';
+
 
     public function __construct()
     {
@@ -29,6 +49,10 @@ class view
         $this->tplDirectory = getenv('TPL_DIR');
     }
 
+    /**
+     * @param $name
+     * @param $data
+     */
     public function addGlobal($name, $data)
     {
         $this->globals[$name] = $data;
@@ -45,6 +69,10 @@ class view
         require $cachedFile;
     }
 
+    /**
+     * @param $file
+     * @return string
+     */
     public function cache($file)
     {
         if (!file_exists($this->cachePath)) {
@@ -66,6 +94,10 @@ class view
         }
     }
 
+    /**
+     * @param $code
+     * @return array|string|string[]|null
+     */
     public function compileCode($code)
     {
         $code = $this->compileBlock($code);
@@ -76,6 +108,10 @@ class view
         return $code;
     }
 
+    /**
+     * @param $file
+     * @return array|string|string[]|null
+     */
     public function includeFiles($file)
     {
         $code = file_get_contents($file);
@@ -87,21 +123,37 @@ class view
         return $code;
     }
 
+    /**
+     * @param $code
+     * @return array|string|string[]|null
+     */
     public function compilePHP($code)
     {
         return preg_replace('~\{%\s*(.+?)\s*\%}~is', '<?php $1 ?>', $code);
     }
 
+    /**
+     * @param $code
+     * @return array|string|string[]|null
+     */
     public function compileEchos($code)
     {
         return preg_replace('~\{{\s*(.+?)\s*\}}~is', '<?php echo $1 ?>', $code);
     }
 
+    /**
+     * @param $code
+     * @return array|string|string[]|null
+     */
     public function compileEscapedEchos($code)
     {
         return preg_replace('~\{{{\s*(.+?)\s*\}}}~is', '<?php echo htmlentities($1, ENT_QUOTES, \'UTF-8\') ?>', $code);
     }
 
+    /**
+     * @param $code
+     * @return array|mixed|string|string[]
+     */
     public function compileBlock($code)
     {
         preg_match_all('/{% ?block ?(.*?) ?%}(.*?){% ?endblock ?%}/is', $code, $matches, PREG_SET_ORDER);
@@ -117,6 +169,10 @@ class view
         return $code;
     }
 
+    /**
+     * @param $code
+     * @return array|string|string[]|null
+     */
     public function compileSection($code)
     {
         foreach ($this->blocks as $block => $value) {
