@@ -7,7 +7,6 @@
         }
     },
     "require": {
-        "twig/twig": "^2",
         "filp/whoops": "^2.14",
         "klein/klein": "^2.1",
         "phpmailer/phpmailer": "^6.5"

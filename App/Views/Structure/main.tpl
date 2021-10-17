@@ -8,23 +8,21 @@
                 <script src="https://kit.fontawesome.com/42d5adcbca.js" crossorigin="anonymous"></script>
                 <link href="assets/css/nucleo-svg.css" rel="stylesheet" />
                 <link id="pagestyle" href="assets/css/drifty.css?v=1.0.3" rel="stylesheet" />
-                {% block head %}
-                        <title>{% if page.title %}{{ page.title }}{% else %}Drifty Framework{% endif %}</title>
-                        <meta name="description" content="{% if page.description %}{{ page.description }}{% else %}The Lightweight PHP Framework{% endif %}">
+                        <title>{% if ($page->title): %}{{ $page->title }}{% else: %}Drifty Framework{% endif %}</title>
+                        <meta name="description" content="{% if ($page->description): %}{{ $page->description }}{% else: %}The Lightweight PHP Framework{% endif %}">
                         <meta property="og:type" content="website">
-                        <meta property="og:title" content="{% if page.title %}{{ page.title }}{% else %}Drifty Framework{% endif %}">
-                        <meta property="og:description" content="{% if page.description %}{{ page.description }}{% else %}The Lightweight PHP Framework{% endif %}">
-                        <meta property="twitter:title" content="{% if page.title %}{{ page.title }}{% else %}Drifty Framework{% endif %}">
-                        <meta property="twitter:description" content="{% if page.description %}{{ page.description }}{% else %}The Lightweight PHP Framework{% endif %}">
-                {% endblock %}
+                        <meta property="og:title" content="{% if ($page->title): %}{{ $page->title }}{% else: %}Drifty Framework{% endif %}">
+                        <meta property="og:description" content="{% if ($page->description): %}{{ $page->description }}{% else: %}The Lightweight PHP Framework{% endif %}">
+                        <meta property="twitter:title" content="{% if ($page->title): %}{{ $page->title }}{% else: %}Drifty Framework{% endif %}">
+                        <meta property="twitter:description" content="{% if ($page->description): %}{{ $page->description }}{% else: %}The Lightweight PHP Framework{% endif %}">
         </head>
-        <body class="{% if page.background %}{{ page.background }}{% else %}bg-gray-100{% endif %}">
+        <body class="{% if ($page->background): %}{{ $page->background }}{% else: %}bg-gray-100{% endif %}">
                 <main class="main-content position-relative max-height-vh-100 h-100 mt-1 border-radius-lg">
-                        {% if page.topNav == true %}
-                                {% include 'navbar/top' %}
+                        {% if ($page->topNav == true): %}
+                                {% include 'Structure/navbar/top.tpl' %}
                         {% endif %}
-                        <div class="container-fluid {% if page.topNav == true %}py-4{% endif %}">
-                                {% block content %}{% endblock %}
+                        <div class="container-fluid {% if ($page->topNav == true): %}py-4{% endif %}">
+                                {% section content %}
                         </div>
                 </main>
 
@@ -34,7 +32,7 @@
                 <script src="assets/js/plugins/perfect-scrollbar.min.js"></script>
                 <script src="assets/js/plugins/smooth-scrollbar.min.js"></script>
                 <script src="assets/js/plugins/chartjs.min.js"></script>
-                {% block scripts %}{% endblock %}
+                {% section scripts %}
                 <script src="assets/js/drifty.min.js?v=1.0.3"></script>
         </body>
 </html>

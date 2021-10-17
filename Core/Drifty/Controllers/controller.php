@@ -18,6 +18,7 @@ class controller extends view {
     const controller_dir = 'App/Controllers';
 
     public function __construct() {
+        parent::__construct();
         $this->loadModel();
     }
 
