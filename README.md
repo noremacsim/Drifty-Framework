@@ -11,6 +11,8 @@ Drifty is a PHP lightweight framework. Originaly built for personal usage, parts
 - Template Engine and Router will be replaced with my own custom ones. Dont build anything around them that can't be upgraded.
 
 ## Documentation
+Please rename .env.example to .env
+Update .env variables with your setup
 
 Documentation Coming Soon...
 - Routing
