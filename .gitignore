@@ -8,3 +8,4 @@
 /docker-compose.yml
 /Dockerfile
 /vhost.conf
+/cache

@@ -9,7 +9,7 @@ class welcome extends controller {
 
     public function welcome()
     {
-        return $this->render('welcome.twig');
+        return $this->render('welcome.tpl');
     }
 
 }
