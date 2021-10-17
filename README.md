@@ -28,7 +28,6 @@ Documentation Coming Soon...
 ## Composer Packages
 List of the included composer packages within the Drifty FrameWork
 
-- twig (Template Engine)
 - phpmailer (Email)
 - Whoops (Error Handiling)
 - klien (Router)
