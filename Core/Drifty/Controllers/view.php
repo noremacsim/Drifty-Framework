@@ -64,6 +64,7 @@ class view
      */
     public function render($file, $data = array())
     {
+        $data = array_merge($data, $this->globals);
         $cachedFile = $this->cache($this->tplDirectory. $file);
         extract($data, EXTR_SKIP);
         require $cachedFile;
