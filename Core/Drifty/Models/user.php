@@ -3,10 +3,19 @@ namespace Drifty\Models;
 
 class user extends model {
 
+    protected $protected = [
+        'id',
+    ];
+
     protected $cookieName = "userlogin";
     protected $keepCookieDays = 1;
     public $table   = 'users';
     protected $primaryKey = 'id';
+
+    public function __construct() {
+        parent::__construct();
+        $this->checkStatus();
+    }
 
     /**
      * @return bool
@@ -17,10 +26,10 @@ class user extends model {
         if ($this->checkSession() === false) {
             if (isset($_COOKIE[$this->cookieName])) {
                 $this->checkCookie();
-            }
+           }
         }
 
-        if ($this->properties['id']) {
+        if (!empty($this->properties['id']['value'])) {
             $this->lastactive = date('Y-m-d H:i:s');
             $this->save();
             return true;
@@ -50,7 +59,7 @@ class user extends model {
     public function encrypt($string, $key) {
         $ciphering = "AES-128-CTR";
         $options = 0;
-        $encryption_iv = '32051505971505';
+        $encryption_iv = '3205150597150567';
         return openssl_encrypt($string, $ciphering, $key, $options, $encryption_iv);
     }
 
@@ -62,7 +71,7 @@ class user extends model {
     public function decrypt ($string, $key) {
         $ciphering = "AES-128-CTR";
         $options = 0;
-        $decryption_iv = '32051505971505';
+        $decryption_iv = '3205150597150567';
         return openssl_decrypt($string, $ciphering, $key, $options, $decryption_iv);
     }
 
@@ -72,21 +81,20 @@ class user extends model {
      * @param int $remember
      * @return bool
      */
-    function login(string $username = "", string $password = "", int $remember = 0) {
+    public function login(string $username = "", string $password = "", int $remember = 0) {
 
         if ($username && $password) {
             $password = $this->encrypt($password, $username);
-            $row = $this->sql->select("id", "users", array("username" => $username, "password" => $password));
+            $row = $this->db->select("id", "users", array("username" => $username, "password" => $password));
             if (count($row)) {
                 $this->find($row[0]['id']);
                 $this->updateSession();
                 $_SESSION['cookie'] = md5(md5(uniqid(rand(), true)));
-
-                $this->cookie   = $_SESSION['cookie'];
-                $this->session  = session_id();
-                $this->ip       = $_SERVER['REMOTE_ADDR'];
+                //$this->cookie   = $_SESSION['cookie'];
+                $this->session = session_id();
+                $this->ip = $_SERVER['REMOTE_ADDR'];
+                $this->remember = 0;
                 $this->save();
-
                 $this->updateCookie($_SESSION['cookie'], !$remember);
                 return true;
             }
@@ -98,7 +106,7 @@ class user extends model {
     /**
      * @return bool
      */
-    function updateSession() {
+    public function updateSession() {
         if (is_array($this->properties) && !empty($this->properties[$this->primaryKey]['value'])) {
 
             $values = $this->properties;
@@ -119,7 +127,7 @@ class user extends model {
      * @param false $sessionCookie
      * @return bool
      */
-    function updateCookie($key, $sessionCookie = false) {
+    public function updateCookie($key, $sessionCookie = false) {
 
         if ($sessionCookie == false) {
             $cookieLife = time() + (86400 * $this->keepCookieDays);
@@ -135,12 +143,12 @@ class user extends model {
      * @param $cookie
      * @return bool
      */
-    function checkCookie($cookie) {
+    public function checkCookie() {
 
         list($username, $cookie) = preg_split("/\|/", $_COOKIE[$this->cookieName]);
 
         if ($username and $cookie) {
-            $result = $this->sql->select("id", "users", array('username' => $username, 'cookie' => $cookie, 'ip' => $_SERVER['REMOTE_ADDR']));
+            $result = $this->db->select("id", "users", array('username' => $username, 'cookie' => $cookie, 'ip' => $_SERVER['REMOTE_ADDR']));
             if (count($result) == 1) {
                 $this->find($result[0]['id']);
                 $this->updateSession();
@@ -155,12 +163,12 @@ class user extends model {
     /**
      * @return bool
      */
-    function checkSession() {
+    public function checkSession() {
 
         $username = $_SESSION['username'];
 
         if ($username) {
-            $result = $this->sql->select("id", "users", array('username' => $username, "session" => session_id(), "ip" => $_SERVER['REMOTE_ADDR']));
+            $result = $this->db->select("id", "users", array('username' => $username, "session" => session_id(), "ip" => $_SERVER['REMOTE_ADDR']));
             if (count($result) == 1) {
                 $this->find($result[0]['id']);
                 $this->updatesession();

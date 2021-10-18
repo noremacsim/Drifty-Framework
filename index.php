@@ -9,6 +9,7 @@
  * @author     noremacsim <noremacsim@github>
  */
 
+session_start();
 include 'Core/preDispatch.php';
 $startTime = microtime(true);
 require_once 'Core/entryPoint.php';

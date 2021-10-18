@@ -169,7 +169,7 @@ class model {
      */
     private function retrieveByPrimary($id)
     {
-        return $this->db->select('*', $this->tableName, array($this->primaryKey => $id));
+        return $this->db->select('*', $this->tableName, array($this->primaryKey => $id))[0];
     }
 
     /**
