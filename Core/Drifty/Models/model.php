@@ -76,7 +76,7 @@ class model {
     {
         if ($property_or_class_name == 'primary_key')
         {
-            return $this->properties[$this->primary_key_name]['value'];
+            return $this->properties[$this->primaryKey]['value'];
         }
         elseif (array_key_exists($property_or_class_name, $this->properties))
         {
@@ -192,8 +192,8 @@ class model {
      */
     public function save()
     {
-        //TODO: Update to use the new proporties
-        $this->db->replace($this->tableName, $this->properties);
+        $result = $this->db->update($this->tableName, $this->properties, array($this->primaryKey => $this->properties[$this->primaryKey]['value']));
+        return $result;
     }
 
     /**
@@ -270,7 +270,7 @@ class model {
      * @param string $id
      * @return array|static
      */
-    public static function findOrCreate($id = '')
+    public static function findOrCreate($id = 0)
     {
         if (empty($id))
         {
@@ -294,6 +294,22 @@ class model {
             $instance->fillPropertyValues($data);
             return  $instance;
         }
+    }
+
+    /**
+     * @param int $id
+     * @return bool
+     */
+    public function find($id = 0): bool
+    {
+        if (!$id)
+        {
+            return false;
+        }
+
+        $data = $this->retrieveByPrimary($id);
+        $this->fillPropertyValues($data);
+        return  true;
     }
 
     /**

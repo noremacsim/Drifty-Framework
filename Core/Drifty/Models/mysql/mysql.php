@@ -175,9 +175,9 @@ class mysql {
     {
         if ($table && is_array($values) == true && count($values) > 0) {
 
-            $toupdate = array();
+            $toUpdate = array();
             foreach (array_keys($values) as $field) {
-                $toupdate[] = sprintf("%s = %s", $field, $this->quote($values[$field]));
+                $toUpdate[] = sprintf("%s = %s", $field, $this->quote($values[$field]['value']));
             }
 
             $where = array();
@@ -190,7 +190,7 @@ class mysql {
             $this->lastsql = sprintf(
                 "UPDATE %s SET %s WHERE %s",
                 $table,
-                implode(", ", $toupdate),
+                implode(", ", $toUpdate),
                 implode(" AND ", $where)
             );
             $result = $this->query($this->lastsql);

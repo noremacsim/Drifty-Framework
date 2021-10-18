@@ -24,7 +24,7 @@ if (!defined('PHP_VERSION_ID')) {
 $subject = new stdClass();// Model Objects
 $driftyApp = new stdClass();// Core System Variables;
 $driftyApp->starttTime     = microtime(true);
-$driftyApp->drifty_version   = 'v0.1';
+$driftyApp->drifty_version   = 'v0.8.0';
 $driftyApp->drifty_flavor   = 'Lime Pie';
 
 /*
