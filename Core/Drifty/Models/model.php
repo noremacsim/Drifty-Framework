@@ -183,16 +183,25 @@ class model {
     }
 
     /**
-     * save model object data to the database table.
-     * <code>
-     *  $modelExample::findOrCreate(1);
-     *  $modelExample->name = 'Drifty Example';
-     *  $modelExample->save();
-     * </code>
+     * @return mixed
      */
     public function save()
     {
         $result = $this->db->update($this->tableName, $this->properties, array($this->primaryKey => $this->properties[$this->primaryKey]['value']));
+        return $result;
+    }
+
+    /**
+     * save model object data to the database table.
+     * <code>
+     *  $modelExample::saveOrCreate(1);
+     *  $modelExample->name = 'Drifty Example';
+     *  $modelExample->save();
+     * </code>
+     */
+    public function saveOrCreate()
+    {
+        $result = $this->db->replace($this->tableName, $this->properties, array($this->primaryKey => $this->properties[$this->primaryKey]['value']));
         return $result;
     }
 

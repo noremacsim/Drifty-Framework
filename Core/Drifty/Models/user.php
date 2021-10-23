@@ -3,14 +3,33 @@ namespace Drifty\Models;
 
 class user extends model {
 
+    /**
+     * @var string
+     */
+    public $table   = 'users';
+
+    /**
+     * @var string[]
+     */
     protected $protected = [
         'id',
     ];
 
+    /**
+     * @var string
+     */
     protected $cookieName = "userlogin";
+
+    /**
+     * @var int
+     */
     protected $keepCookieDays = 1;
-    public $table   = 'users';
+
+    /**
+     * @var string
+     */
     protected $primaryKey = 'id';
+
 
     public function __construct() {
         parent::__construct();
@@ -48,6 +67,9 @@ class user extends model {
         $_SESSION['username']	= "";
         $_SESSION['cookie']	    = "";
         $_SESSION['remember']	= false;
+
+        global $user;
+        $user = new static;
         return true;
     }
 
@@ -81,7 +103,8 @@ class user extends model {
      * @param int $remember
      * @return bool
      */
-    public function login(string $username = "", string $password = "", int $remember = 0) {
+    public function login(string $username = "", string $password = "", int $remember = 0)
+    {
 
         if ($username && $password) {
             $password = $this->encrypt($password, $username);
@@ -98,6 +121,30 @@ class user extends model {
                 $this->updateCookie($_SESSION['cookie'], !$remember);
                 return true;
             }
+        }
+        $this->resetSession();
+        return false;
+    }
+
+    //TODO: Test And finish Function
+    /**
+     * @param $registrationDetails
+     * @return false
+     */
+    public function register($registrationDetails)
+    {
+        $this->resetSession();
+        //TODO: Update tis with on save?
+        if ($registrationDetails['username'] && $registrationDetails['password'])
+        {
+            $this->password = $this->encrypt($registrationDetails['password'], $registrationDetails['username']);
+            $this->session = session_id();
+            $this->ip = $_SERVER['REMOTE_ADDR'];
+            $this->remember = 0;
+            $this->username = $registrationDetails['username'];
+            $this->email = $registrationDetails['email'];
+            $this->saveOrCreate();
+
         }
         $this->resetSession();
         return false;
@@ -144,7 +191,7 @@ class user extends model {
      * @return bool
      */
     public function checkCookie() {
-
+        //TODO: Check the security around this
         list($username, $cookie) = preg_split("/\|/", $_COOKIE[$this->cookieName]);
 
         if ($username and $cookie) {
