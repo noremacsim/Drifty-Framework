@@ -37,6 +37,7 @@ class mysql {
      */
     public function fetchFields($table)
     {
+        $data = array();
         $result = $this->query(sprintf("select * from information_schema.columns where table_schema = '%s' and table_name = '%s'", $this->database, $table));
         if (!$result) {
             return false;
