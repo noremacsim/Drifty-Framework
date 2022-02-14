@@ -1,4 +1,6 @@
 <?php
 /** @var $route */
 
-$route->respond('GET', '/', array(new \Drifty\Controllers\welcome, 'welcome'));
+use Drifty\Controllers\welcome;
+
+$route->respond('GET', '/', array(new welcome, 'welcome'));

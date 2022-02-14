@@ -3,5 +3,5 @@
 
 $route->respond('GET', '/forbidden', function ($request) {
     $pageController = new \Drifty\Controllers\controller();
-    return $pageController->render('error/403.twig');
+    return $pageController->render('error/403.tpl');
 });
