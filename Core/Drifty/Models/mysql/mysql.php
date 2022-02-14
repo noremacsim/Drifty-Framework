@@ -130,6 +130,8 @@ class mysql {
     {
         if (is_array($string) == false) {
             $string = "'" . $this->escapestring($string) . "'";
+        } else {
+            $string = "'" . $this->escapestring($string['value']) . "'";
         }
         return $string;
     }
@@ -149,6 +151,7 @@ class mysql {
      */
     public function insert($table = "", $values = array())
     {
+        unset($values['id']);
         if ($table && is_array($values) == true && count($values) > 0) {
             $this->lastsql = sprintf(
                 "INSERT INTO %s (%s) VALUES (%s)",
