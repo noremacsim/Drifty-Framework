@@ -68,8 +68,6 @@ class user extends model {
         $_SESSION['cookie']	    = "";
         $_SESSION['remember']	= false;
 
-        global $user;
-        $user = new static;
         return true;
     }
 
