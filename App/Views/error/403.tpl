@@ -1,4 +1,4 @@
-{% extends "Structure/main.twig" %}
+{% extends "Structure/main.tpl" %}
 
 {% block content %}
     <div class="page-header min-vh-75">

@@ -15,15 +15,63 @@ Drifty is a PHP lightweight framework. Originaly built for personal usage, parts
 * > Please rename .env.example to .env
 * > Update .env variables with your setup
 
-Documentation Coming Soon...
-- Routing
+Documentation is incomplete and will be regularly updated.
+- Routing ([Klien Router Documentation](https://github.com/klein/klein.php))
 - Controllers
+  - Controllers are stored in the root. the root is /App.
+  - All Controllers must extend Drifty/Controller.
+  - Detailed Documentation coming soon. 
 - Models
+  - Models exist in the root. the root is /App
+  - Model Table Name 
+    ```php
+    public $table = 'table_name';
+    ```
+    If no table name is set it will take the model name.
+  - Model PrimaryKey
+    ```php
+    protected $primaryKey = 'id';
+    ```
+  - Model Protected Keys
+    ```php
+    protected $protected = [
+        'id',
+    ];
+    ```
+  - Model saveOrCreate
+    - save model object data to the database table.
+        ```php
+        $modelExample::saveOrCreate(1);
+        $modelExample->name = 'Drifty Example';
+        $modelExample->save();
+        ```
+  - Find data from DB from PrimayID, Or Create a new Model Object by passing an array of ids multipe Model Objects can be returned of each record.
+    - Example find record from DB.
+      ```php
+        $exampleModels::findOrCreate(1);
+      ```
+      - Example find multiple records by ID and return
+      ```php
+      $exampleModels::findOrCreate(array(1,2,3,4));
+      ```
+      - Return new model object to create new DB Entry
+      ```php
+      $exampleModels::findOrCreate();
+      ```
 - Databse
+  - Database Schema/Builder Coming soon.
+  - Documentation will be updated when released.
+  - uses mysqli
+  - Will exists in Drifty/models/mysql/databaseBuilder
 - Template/View
+  - Template engine documentation will be updated soon.
+  - basic implemtation example can be found in the welcome controller
 - Api
+  - Documentation will be release on api release
 - Authentication
-- Object relational Mapping
+  - User Model documentation will be added soon
+- Object relational Mapping (TBI)
+  - Partially ready will be released soon
 
 ## Composer Packages
 List of the included composer packages within the Drifty FrameWork
@@ -33,6 +81,11 @@ List of the included composer packages within the Drifty FrameWork
 - klien (Router)
 
 # Installing
-Documentation Coming Soon...
+- Run Composer Install
+- Point to root (index.php)
+- Define routes in Routes.
+- Docker Container (Coming Soon)
+
+Documentation Update Coming Soon...
 
 @author     noremacsim <noremacsim@github>
